@@ -1,23 +1,55 @@
-int alarmInPin = 2;
+
+// user input pins
+
+int doSupressPin = 5;
+int doOffPin = 6;
+
+// clock pins
+
+int alarmStatePin = 2;
 int alarmOffPin = 3;
+int alarmSupressPin = 4;
 
 
 void setup()                    // run once, when the sketch starts
 {
   Serial.begin(9600);           // set up Serial library at 9600 bps
-  pinMode(alarmInPin, INPUT);    // sets the digital pin as input to read switch
-  digitalWrite(alarmInPin, HIGH);
+  
+  // setup input pins
+  
+  pinMode(doSupressPin, INPUT);
+  digitalWrite(doSupressPin, LOW);
+  pinMode(doOffPin, INPUT);
+  digitalWrite(doOffPin, LOW);
+  
+  // setup clock pins
+  
+  pinMode(alarmStatePin, INPUT);    // sets the digital pin as input to read switch
+  digitalWrite(alarmStatePin, HIGH);
+  
   pinMode(alarmOffPin, OUTPUT);      // sets the digital pin as output
+  
+  pinMode(alarmSupressPin, OUTPUT);
+  digitalWrite(alarmSupressPin, HIGH);
 }
 
 void loop()                     // run over and over again
 {
-  Serial.print("Read alarm input: ");
-  Serial.println(digitalRead(alarmInPin));    // Read the pin and display the value
-  if (digitalRead(alarmInPin) == 1) {
-    delay(3000);
-    digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
-  }
-  //digitalWrite(alarmOffPin, LOW);   // als high blijft, kan alarm niet meer afgaan
+  Serial.print("Read alarm state: ");
+  Serial.println(digitalRead(alarmStatePin));    // Read the pin and display the value
+  
+  Serial.print("Read relais/suppress state: ");
+  Serial.println(digitalRead(alarmSupressPin));    // Read the pin and display the value
+    
+  // detect supress call
+  //if (digitalRead(doSupressPin) == 1) {
+  //  digitalWrite(alarmSupressPin, LOW);   // schakel alarm uit
+  //}
+  
+  // detect off call
+  //if (digitalRead(doOffPin) == 1) {
+  //  digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
+  //}
+  
   delay(1000);
 }
