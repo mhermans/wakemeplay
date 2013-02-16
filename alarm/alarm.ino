@@ -14,7 +14,10 @@ void loop()                     // run over and over again
 {
   Serial.print("Read alarm input: ");
   Serial.println(digitalRead(alarmInPin));    // Read the pin and display the value
-  //Serial.print("Read alarm input: ");
-  //Serial.println(digitalRead(alarmPin));    // Read the pin and display the value
+  if (digitalRead(alarmInPin) == 1) {
+    delay(3000);
+    digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
+  }
+  //digitalWrite(alarmOffPin, LOW);   // als high blijft, kan alarm niet meer afgaan
   delay(1000);
 }
