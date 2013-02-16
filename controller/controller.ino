@@ -6,6 +6,8 @@ int ry = 0;
 //int lx = 0;
 //int ly = 0;
 
+int movedir;
+
 int as_discrete(int val)  {
   int dval ;
   if (val < 350) {
@@ -20,13 +22,6 @@ int as_discrete(int val)  {
   return dval;
 }
 
-//int read_position() {
-//  rx = as_discrete(analogRead(rx_pin));
-//  ry = as_discrete(analogRead(ry_pin))*-1;
-  //TODO y positions
-//}
-
-
 void setup()
 {
   Serial.begin(9600);          //  setup serial
@@ -34,18 +29,19 @@ void setup()
 
 void loop()
 {
-  //Serial.println(analogRead(ry_pin));
   int tmp_rx = as_discrete(analogRead(rx_pin));
   int tmp_ry = as_discrete(analogRead(ry_pin))*-1;
-  //Serial.println(tmp_ry);
 
-  //Serial.print("RX, RY: ");
   //if neutral was reached
   if (rx == 0 && ry == 0 ) {
-//    if (tmp_rx != 0 && tmp_ry != 0 ) {
+
+  // do not need (0,0) values
   if (tmp_rx != 0 || tmp_ry != 0) {
-      Serial.print(tmp_rx);
-      Serial.println(tmp_ry);
+      if (tmp_rx == 0 && tmp_ry == 1) { movedir = 1; }
+      if (tmp_rx == 1 && tmp_ry == 0) { movedir = 2; }
+      if (tmp_rx == 0 && tmp_ry == -1) { movedir = 3; }
+      if (tmp_rx == -1 && tmp_ry == 0) { movedir = 4; }
+      Serial.print(movedir);
     }
   }
 
