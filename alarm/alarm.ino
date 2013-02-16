@@ -51,17 +51,25 @@ void loop()                     // run over and over again
     
   // detect supress call
   if (digitalRead(doSupressPin) == 0) {
-    digitalWrite(alarmSupressPin, LOW);   // schakel alarm uit
+    digitalWrite(alarmSupressPin, LOW);   // supress alarm
   }
 
   else  {
-    digitalWrite(alarmSupressPin, HIGH);   // schakel alarm uit
+    digitalWrite(alarmSupressPin, HIGH);   // no supress signal -> relais on
   }
+
+  // detect off call
+  if (digitalRead(doOffPin) == 0) {
+    digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
+    delay(10);
+    digitalWrite(alarmOffPin, LOW);   // mag niet op off blijven staan
+  }
+
   
   // detect off call
   //if (digitalRead(doOffPin) == 1) {
   //  digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
   //}
   
-  delay(1000);
+  delay(100);
 }
