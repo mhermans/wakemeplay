@@ -18,9 +18,10 @@ void setup()                    // run once, when the sketch starts
   // setup input pins
   
   pinMode(doSupressPin, INPUT);
-  digitalWrite(doSupressPin, LOW);
+  digitalWrite(doSupressPin, HIGH);
+  
   pinMode(doOffPin, INPUT);
-  digitalWrite(doOffPin, LOW);
+  digitalWrite(doOffPin, HIGH);
   
   // setup clock pins
   
@@ -35,16 +36,27 @@ void setup()                    // run once, when the sketch starts
 
 void loop()                     // run over and over again
 {
-  Serial.print("Read alarm state: ");
+  Serial.print("Alarm state: ");
   Serial.println(digitalRead(alarmStatePin));    // Read the pin and display the value
   
-  Serial.print("Read relais/suppress state: ");
+  Serial.print("Relais/suppress state: ");
   Serial.println(digitalRead(alarmSupressPin));    // Read the pin and display the value
+
+  Serial.print("Do suppress state: ");
+  Serial.println(digitalRead(doSupressPin));    // Read the pin and display the value
+
+  Serial.print("Do off state: ");
+  Serial.println(digitalRead(doOffPin));    // Read the pin and display the value
+
     
   // detect supress call
-  //if (digitalRead(doSupressPin) == 1) {
-  //  digitalWrite(alarmSupressPin, LOW);   // schakel alarm uit
-  //}
+  if (digitalRead(doSupressPin) == 0) {
+    digitalWrite(alarmSupressPin, LOW);   // schakel alarm uit
+  }
+
+  else  {
+    digitalWrite(alarmSupressPin, HIGH);   // schakel alarm uit
+  }
   
   // detect off call
   //if (digitalRead(doOffPin) == 1) {
