@@ -20,6 +20,12 @@ int ry = 0;
 
 int movedir;
 
+int input_code[4];
+
+int correct_code[4] = {1,2,3, 4};
+
+int pos_code = 0;
+
 int as_discrete(int val)  {
   int dval ;
   if (val < 200) {
@@ -75,7 +81,28 @@ void loop()                     // run over and over again
       if (tmp_rx == 1 && tmp_ry == 0) { movedir = 2; }
       if (tmp_rx == 0 && tmp_ry == -1) { movedir = 3; }
       if (tmp_rx == -1 && tmp_ry == 0) { movedir = 4; }
-      Serial.print(movedir);
+      Serial.println(movedir);
+      
+      input_code[pos_code] = movedir;
+      Serial.print("pos 0 ");
+      Serial.println(input_code[0]);
+      Serial.print("pos 1 ");
+      Serial.println(input_code[1]);
+      Serial.print("pos 2 ");
+      Serial.println(input_code[2]);
+      Serial.print("pos 3 ");
+      Serial.println(input_code[3]);
+      
+      if (input_code[pos_code] == correct_code[pos_code]) {
+        Serial.print("pos i is correct");
+        pos_code = pos_code + 1;
+        if (pos_code == 4) {
+          Serial.print("Access");
+          digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
+            delay(10);
+            digitalWrite(alarmOffPin, LOW);   // mag niet op off blijven staan
+        }
+      }
     }
   }
 
@@ -83,6 +110,12 @@ void loop()                     // run over and over again
   ry = tmp_ry; 
   
   // alarm stuk
+  
+  // alarm gaat af
+  
+  if (digitalRead(alarmStatePin) == 1) {
+    Serial.println("ALARM! Enter code: 1234");
+  }
   
   
   //Serial.print("Alarm state: ");
