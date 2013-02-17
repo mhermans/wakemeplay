@@ -18,11 +18,11 @@ int ry = 0;
 //int lx = 0;
 //int ly = 0;
 
-int movedir;
+int movedir; //direction controler -> int 1|2|3|4
 
-int input_code[4];
+int input_code[4]; // tried code
 
-int correct_code[4] = {1,2,3, 4};
+int correct_code[4] = {4,2,3, 1}; // challenge code TODO make random
 
 int pos_code = 0;
 
@@ -66,9 +66,7 @@ void setup()                    // run once, when the sketch starts
 void loop()                     // run over and over again
 {
   
-  // controller stuk
-    //Serial.println(analogRead(rx_pin));
-  //  Serial.println(analogRead(ry_pin));
+  // controller gedeelte
   int tmp_rx = as_discrete(analogRead(rx_pin));
   int tmp_ry = as_discrete(analogRead(ry_pin))*-1;
 
@@ -84,24 +82,20 @@ void loop()                     // run over and over again
       Serial.println(movedir);
       
       input_code[pos_code] = movedir;
-      Serial.print("pos 0 ");
-      Serial.println(input_code[0]);
-      Serial.print("pos 1 ");
-      Serial.println(input_code[1]);
-      Serial.print("pos 2 ");
-      Serial.println(input_code[2]);
-      Serial.print("pos 3 ");
-      Serial.println(input_code[3]);
       
       if (input_code[pos_code] == correct_code[pos_code]) {
-        Serial.print("pos i is correct");
         pos_code = pos_code + 1;
         if (pos_code == 4) {
-          Serial.print("Access");
+          Serial.print("Well done, go get breakfast!");
           digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
             delay(10);
             digitalWrite(alarmOffPin, LOW);   // mag niet op off blijven staan
         }
+      }
+      else {
+        Serial.print("error, reset");
+        pos_code = 0;
+        int input_code[4] ;
       }
     }
   }
@@ -114,7 +108,7 @@ void loop()                     // run over and over again
   // alarm gaat af
   
   if (digitalRead(alarmStatePin) == 1) {
-    Serial.println("ALARM! Enter code: 1234");
+    Serial.println("ALARM! Enter code: 4231");
   }
   
   

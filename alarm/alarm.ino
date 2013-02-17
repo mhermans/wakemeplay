@@ -71,5 +71,5 @@ void loop()                     // run over and over again
   //  digitalWrite(alarmOffPin, HIGH);   // schakel alarm uit
   //}
   
-  delay(100);
+  delay(1000);
 }

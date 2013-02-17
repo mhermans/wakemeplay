@@ -1,5 +1,5 @@
 int rx_pin = 0;
-int ry_pin = 1;
+int ry_pin = 2;
 
 int rx = 0;
 int ry = 0;
@@ -10,10 +10,10 @@ int movedir;
 
 int as_discrete(int val)  {
   int dval ;
-  if (val < 350) {
+  if (val < 200) {
     dval = -1;
   }
-  else if (val > 650) {
+  else if (val > 450) {
     dval = 1;
   }
   else {
@@ -29,6 +29,8 @@ void setup()
 
 void loop()
 {
+  //Serial.println(analogRead(rx_pin));
+  //  Serial.println(analogRead(ry_pin));
   int tmp_rx = as_discrete(analogRead(rx_pin));
   int tmp_ry = as_discrete(analogRead(ry_pin))*-1;
 
